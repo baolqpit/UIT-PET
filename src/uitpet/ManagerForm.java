@@ -11,6 +11,7 @@ import DAOmodel.CustomerDAO;
 import DAOmodel.EmployeeDAO;
 import DAOmodel.ProductDAO;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -130,9 +131,18 @@ public class ManagerForm extends javax.swing.JFrame {
         b.setEnabled(false);
     }
     
+    public static void updateProductListTable(){
+        DefaultTableModel model = (DefaultTableModel) productListTable.getModel();
+        ArrayList<Product> list = ProductDAO.getInstance().SelectAll();
+        for (Product p : list){
+            model.addRow(new Object[]{p.getProductCode(),p.getProductName(),p.getQuantity(),p.getImportPrice(),p.getProductPrice(),"None",p.getDateAdded()});
+        }
+    }
+    
     public ManagerForm() {
         initComponents();
         this.setIconImage(new ImageIcon("Images/pet-shop.PNG").getImage());
+        updateProductListTable();
     }
 
     /**

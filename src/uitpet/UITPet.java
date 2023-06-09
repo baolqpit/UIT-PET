@@ -23,6 +23,10 @@ public class UITPet {
     public static void main(String[] args) {
         // TODO code application logic here
         new LoginFrame();
+        ArrayList<Product> list = ProductDAO.getInstance().SelectAll();
+        for (Product p : list){
+            System.out.println(p);
+        }
     }
     
 }

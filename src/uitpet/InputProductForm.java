@@ -261,7 +261,7 @@ public class InputProductForm extends javax.swing.JFrame {
         }
         if (quantity <= 0){
             valid = false;
-            JOptionPane.showMessageDialog(this, "So luong must larger than 0!", "Error!", JOptionPane.ERROR_MESSAGE);
+            sb.append("So luong must larger than 0!\n");
         }
         if (date.equals("")){
             valid = false;
@@ -275,12 +275,21 @@ public class InputProductForm extends javax.swing.JFrame {
 //        Ep kieu
         inPrice = Integer.parseInt(stringPrice);
         outPrice = Integer.parseInt(stringImportPrice);
+        if (note.equals("")){
+            note = "NONE";
+        }
         if (valid == true){
             Product product = new Product(code, name, inPrice, note, outPrice, quantity, date);
             boolean productCheck = ProductDAO.getInstance().isExistedID(code);
             System.out.println(productCheck);
             if (productCheck == true){
-                JOptionPane.showMessageDialog(this, "Ma san pham da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
+                if (isUpdate){
+                    int updatePro = ProductDAO.getInstance().update(product);
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Ma san pham da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
+
+                }
             }
             else {
                 int createProduct = ProductDAO.getInstance().insert(product);
