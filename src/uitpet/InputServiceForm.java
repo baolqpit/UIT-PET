@@ -4,6 +4,10 @@
  */
 package uitpet;
 
+import ClassModel.Service;
+import DAOmodel.ServiceDAO;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,21 +22,23 @@ public class InputServiceForm extends javax.swing.JFrame {
     String type="", code="" , name="" ,note="";
     boolean isUpdate = false;
     int row;
-    long price;
+    int price;
     public Object[] getRow() {
-        return new Object[] { type,code,name,note };
+        return new Object[] { type,code,name,price,note };
     }
     
-    public InputServiceForm(String sType, String sCode, String sName, String sNote,int row) {
+    public InputServiceForm(String sType, String sCode, String sName,String sPrice, String sNote,int row) {
         initComponents();
         serviceType.setSelectedItem(sType);
         serviceCode.setText(sCode);
         serviceName.setText(sName);
+        servicePrice.setText(sPrice);
         serviceNote.setText(sNote);
+        
         code = serviceCode.getText();
         name = serviceName.getText();
-//        price = Long.parseLong(servicePrice.getText());
         note = serviceNote.getText();
+        price = Integer.parseInt(servicePrice.getText());
         this.row = row;
         isUpdate = true;
     }
@@ -202,14 +208,52 @@ public class InputServiceForm extends javax.swing.JFrame {
         type = (String) serviceType.getSelectedItem();
         code = serviceCode.getText();
         name = serviceName.getText();
-        price = Long.parseLong(servicePrice.getText());
+        String sPrice = servicePrice.getText();
+        price = Integer.parseInt(sPrice);
         note = serviceNote.getText();
-        if (isUpdate) {
-            ManagerForm.replaceRowToServiceTable(getRow(),this.row);
-        } else {
-            ManagerForm.addRowToServiceTable(getRow());
+        if (note.equals("")){
+            note = "NONE";
+        }
+        else {
+            note = serviceNote.getText();
         }
         
+        StringBuilder sb = new StringBuilder();
+        if (code.equals("")){
+            sb.append("Ma dich vu is empty!\n");
+        }
+        if (name.equals("")){
+            sb.append("Ten dich vu is empty!\n");
+        }
+        if (sPrice.equals("")){
+            sb.append("Gia dich vu is empty!\n");
+        }
+        if (sb.length() > 0){
+                    SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
+        });
+        }
+        
+        Service service = new Service(code, name, type, note, price);
+        boolean check = ServiceDAO.getInstance().isExistedID(code);
+        if (check){
+            if (isUpdate){
+                int updateSer = ServiceDAO.getInstance().update(service);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Ma dich vu da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else {
+            int createSer = ServiceDAO.getInstance().insert(service);
+            JOptionPane.showMessageDialog(this, "Register successfully!");
+            if (isUpdate){
+                ManagerForm.replaceRowToServiceTable(getRow(),this.row);
+            }
+            else {
+                ManagerForm.addRowToServiceTable(getRow());
+            }
+        }
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

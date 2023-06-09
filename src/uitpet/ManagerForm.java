@@ -7,9 +7,11 @@ package uitpet;
 import ClassModel.Customer;
 import ClassModel.Employee;
 import ClassModel.Product;
+import ClassModel.Service;
 import DAOmodel.CustomerDAO;
 import DAOmodel.EmployeeDAO;
 import DAOmodel.ProductDAO;
+import DAOmodel.ServiceDAO;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -710,10 +712,10 @@ public class ManagerForm extends javax.swing.JFrame {
 
         serviceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"CS", "CS001", "Vệ sinh thú cưng", "Tắm, xấy khô"}
+                {"CS", "CS001", "Vệ sinh thú cưng", null, "Tắm, xấy khô"}
             },
             new String [] {
-                "Loại hình dịch vụ", "Mã dịch vụ", "Tên dịch vụ", "Ghi chú"
+                "Loại hình dịch vụ", "Mã dịch vụ", "Tên dịch vụ", "Giá", "Ghi chú"
             }
         ));
         jScrollPane5.setViewportView(serviceTable);
@@ -1547,8 +1549,9 @@ public class ManagerForm extends javax.swing.JFrame {
             String type = model.getValueAt(index, 0).toString();
             String code = model.getValueAt(index, 1).toString();
             String name = model.getValueAt(index, 2).toString();
-            String note = model.getValueAt(index, 3).toString();
-            InputServiceForm data = new InputServiceForm(type,code,name,note,index);
+            String price = model.getValueAt(index, 3).toString();
+            String note = model.getValueAt(index, 4).toString();
+            InputServiceForm data = new InputServiceForm(type,code,name,price,note,index);
             data.setVisible(true);
             data.pack();
         }
@@ -1566,6 +1569,12 @@ public class ManagerForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int index = serviceTable.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) serviceTable.getModel();
+        String serId = (String) model.getValueAt(index, 1);
+        System.out.println(serId);
+        Service service = new Service();
+        service.setServiceCode(serId);
+        System.out.println(service);
+        int deleteRow = ServiceDAO.getInstance().delete(service);
         if (index != -1) model.removeRow(index);
     }//GEN-LAST:event_jButton22ActionPerformed
 

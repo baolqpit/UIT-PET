@@ -17,6 +17,27 @@ public class ServiceDAO implements DAOInterface<Service>{
         return new ServiceDAO();
     }
     
+    public static boolean isExistedID(String code){
+        boolean check = false;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT COUNT(*) FROM SERVICE WHERE SERVICE_CODE = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, code);
+            
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+            if (count > 0){
+                check = true;
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+    
     @Override
     public int insert(Service t) {
         int result = 0;
@@ -53,7 +74,7 @@ public class ServiceDAO implements DAOInterface<Service>{
             
             String sql = "UPDATE SERVICE " 
                     + "SET SERVICE_NAME = ?, " + "TYPE= ?, "
-                    + "PRICE = ?, " + "NOTE= ?, " + "WHERE SERVICE_CODE = ?";
+                    + "PRICE = ?, " + "NOTES= ? " + "WHERE SERVICE_CODE = ?";
                     
             PreparedStatement pst = c.prepareStatement(sql);
             System.out.println("You have done: " + sql);

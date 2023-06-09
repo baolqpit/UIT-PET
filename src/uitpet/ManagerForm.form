@@ -893,7 +893,7 @@
                         <Component class="javax.swing.JTable" name="serviceTable">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="4" rowCount="1">
+                              <Table columnCount="5" rowCount="1">
                                 <Column editable="true" title="Lo&#x1ea1;i h&#xec;nh d&#x1ecb;ch v&#x1ee5;" type="java.lang.Object">
                                   <Data value="CS"/>
                                 </Column>
@@ -903,6 +903,7 @@
                                 <Column editable="true" title="T&#xea;n d&#x1ecb;ch v&#x1ee5;" type="java.lang.Object">
                                   <Data value="V&#x1ec7; sinh th&#xfa; c&#x1b0;ng"/>
                                 </Column>
+                                <Column editable="true" title="Gi&#xe1;" type="java.lang.Object"/>
                                 <Column editable="true" title="Ghi ch&#xfa;" type="java.lang.Object">
                                   <Data value="T&#x1eaf;m, x&#x1ea5;y kh&#xf4;"/>
                                 </Column>
@@ -910,6 +911,11 @@
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                               <TableColumnModel selectionModel="0">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
                                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                   <Title/>
                                   <Editor/>

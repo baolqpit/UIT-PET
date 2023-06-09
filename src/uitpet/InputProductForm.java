@@ -28,13 +28,13 @@ public class InputProductForm extends javax.swing.JFrame {
         return new Object[] { code , name  , quantity, inPrice,outPrice,note, date };
     }
     
-    public InputProductForm(String pCode, String pName,int pQuantity, long inPrice, long outPrice, String pNote, String date,int row) {
+    public InputProductForm(String pCode, String pName,int pQuantity, int inPrice, int outPrice, String pNote, String date,int row) {
         initComponents();
         codeField.setText(pCode);
         nameField.setText(pName);
         quantityField.setValue(pQuantity);
-        inPriceField.setText(Long.toString(inPrice));
-        outPriceField.setText(Long.toString(outPrice));
+        inPriceField.setText(Integer.toString(inPrice));
+        outPriceField.setText(Integer.toString(outPrice));
         noteField.setText(pNote);
         dateField.setText(date);
         this.row = row;
@@ -238,6 +238,12 @@ public class InputProductForm extends javax.swing.JFrame {
         name = nameField.getText();
         String stringPrice = outPriceField.getText();
         note = noteField.getText();
+        if (note.equals("")){
+            note = "NONE";
+        }
+        else {
+            note = noteField.getText();
+        }
         String stringImportPrice = inPriceField.getText();
         quantity = (int) quantityField.getValue();
         date = dateField.getText();
@@ -275,9 +281,6 @@ public class InputProductForm extends javax.swing.JFrame {
 //        Ep kieu
         inPrice = Integer.parseInt(stringPrice);
         outPrice = Integer.parseInt(stringImportPrice);
-        if (note.equals("")){
-            note = "NONE";
-        }
         if (valid == true){
             Product product = new Product(code, name, inPrice, note, outPrice, quantity, date);
             boolean productCheck = ProductDAO.getInstance().isExistedID(code);
@@ -295,7 +298,8 @@ public class InputProductForm extends javax.swing.JFrame {
                 int createProduct = ProductDAO.getInstance().insert(product);
                 JOptionPane.showMessageDialog(this, "Register successfully!");
                 if (isUpdate) {
-                    ManagerForm.replaceRowToProductListTable(getRow(),this.row);
+//                    ManagerForm.replaceRowToProductListTable(getRow(),this.row);
+                       ManagerForm.updateProductListTable();
                 }
                 else {
                     ManagerForm.addRowToProductListTable(getRow());
