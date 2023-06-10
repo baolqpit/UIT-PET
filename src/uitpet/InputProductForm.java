@@ -288,6 +288,8 @@ public class InputProductForm extends javax.swing.JFrame {
             if (productCheck == true){
                 if (isUpdate){
                     int updatePro = ProductDAO.getInstance().update(product);
+                    ManagerForm.updateProductListTable();
+
                 }
                 else {
                     JOptionPane.showMessageDialog(this, "Ma san pham da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -300,6 +302,7 @@ public class InputProductForm extends javax.swing.JFrame {
                 if (isUpdate) {
 //                    ManagerForm.replaceRowToProductListTable(getRow(),this.row);
                        ManagerForm.updateProductListTable();
+                       ManagerForm.resetTable();
                 }
                 else {
                     ManagerForm.addRowToProductListTable(getRow());

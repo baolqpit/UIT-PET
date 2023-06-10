@@ -135,16 +135,35 @@ public class ManagerForm extends javax.swing.JFrame {
     
     public static void updateProductListTable(){
         DefaultTableModel model = (DefaultTableModel) productListTable.getModel();
+        model.setRowCount(0);
         ArrayList<Product> list = ProductDAO.getInstance().SelectAll();
         for (Product p : list){
-            model.addRow(new Object[]{p.getProductCode(),p.getProductName(),p.getQuantity(),p.getImportPrice(),p.getProductPrice(),"None",p.getDateAdded()});
+            model.addRow(new Object[]{p.getProductCode(),p.getProductName(),p.getQuantity(),p.getImportPrice(),p.getProductPrice(),p.getProductNotes(),p.getDateAdded()});
         }
+        productListTable.setModel(model);
+    }
+    
+    public static void updateServiceTable(){
+        DefaultTableModel model = (DefaultTableModel) serviceTable.getModel();
+        model.setRowCount(0);
+        ArrayList<Service> list = ServiceDAO.getInstance().SelectAll();
+        for (Service p : list){
+            model.addRow(new Object[]{p.getServiceCode(), p.getServiceName(), p.getServicePrice(), p.getServiceNotes()});
+        }
+        serviceTable.setModel(model);
+    }
+    
+    public static void resetTable() {
+        System.out.println("renew there");
+        DefaultTableModel model = (DefaultTableModel) productListTable.getModel();
+        model.fireTableDataChanged();
     }
     
     public ManagerForm() {
         initComponents();
         this.setIconImage(new ImageIcon("Images/pet-shop.PNG").getImage());
         updateProductListTable();
+        updateServiceTable();
     }
 
     /**
@@ -212,19 +231,8 @@ public class ManagerForm extends javax.swing.JFrame {
         jButton24 = new javax.swing.JButton();
         serviceTypeLayout = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        serviceTypeCode = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        serviceTypeName = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        serviceTypeNote = new javax.swing.JTextArea();
-        addSTbtn = new javax.swing.JButton();
-        deleteSTbtn = new javax.swing.JButton();
-        updateSTbtn = new javax.swing.JButton();
-        jPanel12 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        serviceTypeTable = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         productLayout = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         productListTable = new javax.swing.JTable();
@@ -567,7 +575,6 @@ public class ManagerForm extends javax.swing.JFrame {
         ));
         productTable.setGridColor(new java.awt.Color(255, 255, 255));
         productTable.setSelectionBackground(new java.awt.Color(51, 255, 255));
-        productTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
         productTable.setShowGrid(true);
         jScrollPane3.setViewportView(productTable);
 
@@ -712,10 +719,10 @@ public class ManagerForm extends javax.swing.JFrame {
 
         serviceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"CS", "CS001", "Vệ sinh thú cưng", null, "Tắm, xấy khô"}
+
             },
             new String [] {
-                "Loại hình dịch vụ", "Mã dịch vụ", "Tên dịch vụ", "Giá", "Ghi chú"
+                "Mã dịch vụ", "Tên dịch vụ", "Giá", "Ghi chú"
             }
         ));
         jScrollPane5.setViewportView(serviceTable);
@@ -759,7 +766,7 @@ public class ManagerForm extends javax.swing.JFrame {
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addContainerGap(540, Short.MAX_VALUE)
+                .addContainerGap(557, Short.MAX_VALUE)
                 .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -797,131 +804,37 @@ public class ManagerForm extends javax.swing.JFrame {
 
         jPanel4.add(serviceLayout, "card3");
 
-        serviceTypeLayout.setLayout(new java.awt.GridLayout(1, 2));
+        serviceTypeLayout.setLayout(new java.awt.BorderLayout());
 
-        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel13.setText("Mã loại hình");
-
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel14.setText("Tên loại hình");
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setText("Ghi chú");
-
-        serviceTypeNote.setColumns(20);
-        serviceTypeNote.setRows(5);
-        jScrollPane6.setViewportView(serviceTypeNote);
-
-        addSTbtn.setBackground(new java.awt.Color(153, 255, 153));
-        addSTbtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        addSTbtn.setForeground(new java.awt.Color(102, 0, 51));
-        addSTbtn.setText("Thêm");
-        addSTbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addSTbtnActionPerformed(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
-
-        deleteSTbtn.setBackground(new java.awt.Color(153, 255, 153));
-        deleteSTbtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        deleteSTbtn.setForeground(new java.awt.Color(102, 0, 51));
-        deleteSTbtn.setText("Xóa");
-        deleteSTbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteSTbtnActionPerformed(evt);
-            }
-        });
-
-        updateSTbtn.setBackground(new java.awt.Color(153, 255, 153));
-        updateSTbtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        updateSTbtn.setForeground(new java.awt.Color(102, 0, 51));
-        updateSTbtn.setText("Sửa");
-        updateSTbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateSTbtnActionPerformed(evt);
-            }
-        });
+        ));
+        jScrollPane6.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(serviceTypeCode)
-                            .addComponent(serviceTypeName)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
-                        .addContainerGap(63, Short.MAX_VALUE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(addSTbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(deleteSTbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(updateSTbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 500, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(serviceTypeCode, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14)
-                    .addComponent(serviceTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
-                .addGap(37, 37, 37)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(updateSTbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteSTbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addSTbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 459, Short.MAX_VALUE))
         );
 
-        serviceTypeLayout.add(jPanel9);
-
-        serviceTypeTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Mã loại hình", "Tên loại hình", "Ghi chú"
-            }
-        ));
-        jScrollPane7.setViewportView(serviceTypeTable);
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
-        );
-
-        serviceTypeLayout.add(jPanel12);
+        serviceTypeLayout.add(jPanel9, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(serviceTypeLayout, "card4");
 
@@ -978,7 +891,7 @@ public class ManagerForm extends javax.swing.JFrame {
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap(542, Short.MAX_VALUE)
+                .addContainerGap(553, Short.MAX_VALUE)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1011,7 +924,7 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(671, Short.MAX_VALUE))
+                .addContainerGap(682, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1078,7 +991,7 @@ public class ManagerForm extends javax.swing.JFrame {
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap(535, Short.MAX_VALUE)
+                .addContainerGap(552, Short.MAX_VALUE)
                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1111,7 +1024,7 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(646, Short.MAX_VALUE))
+                .addContainerGap(657, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1177,7 +1090,7 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(jPanel22Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(479, Short.MAX_VALUE))
+                .addContainerGap(491, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1241,7 +1154,7 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(jPanel23Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(786, Short.MAX_VALUE))
+                .addContainerGap(792, Short.MAX_VALUE))
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1292,7 +1205,7 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(jPanel25Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(659, Short.MAX_VALUE))
+                .addContainerGap(670, Short.MAX_VALUE))
         );
         jPanel25Layout.setVerticalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1341,7 +1254,7 @@ public class ManagerForm extends javax.swing.JFrame {
         jPanel26Layout.setHorizontalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
-                .addContainerGap(566, Short.MAX_VALUE)
+                .addContainerGap(583, Short.MAX_VALUE)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1375,7 +1288,7 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 3, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1546,12 +1459,11 @@ public class ManagerForm extends javax.swing.JFrame {
         } 
         else {
             DefaultTableModel model = (DefaultTableModel) serviceTable.getModel();
-            String type = model.getValueAt(index, 0).toString();
-            String code = model.getValueAt(index, 1).toString();
-            String name = model.getValueAt(index, 2).toString();
-            String price = model.getValueAt(index, 3).toString();
-            String note = model.getValueAt(index, 4).toString();
-            InputServiceForm data = new InputServiceForm(type,code,name,price,note,index);
+            String code = model.getValueAt(index, 0).toString();
+            String name = model.getValueAt(index, 1).toString();
+            String price = model.getValueAt(index, 2).toString();
+            String note = model.getValueAt(index, 3).toString();
+            InputServiceForm data = new InputServiceForm(code,name,price,note,index);
             data.setVisible(true);
             data.pack();
         }
@@ -1577,51 +1489,6 @@ public class ManagerForm extends javax.swing.JFrame {
         int deleteRow = ServiceDAO.getInstance().delete(service);
         if (index != -1) model.removeRow(index);
     }//GEN-LAST:event_jButton22ActionPerformed
-
-    private void addSTbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSTbtnActionPerformed
-        // TODO add your handling code here:\
-        DefaultTableModel model = (DefaultTableModel) serviceTypeTable.getModel();
-        model.addRow(new Object[]{
-            serviceTypeCode.getText(),
-            serviceTypeName.getText(),
-            serviceTypeNote.getText()
-        });
-    }//GEN-LAST:event_addSTbtnActionPerformed
-
-    private void deleteSTbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSTbtnActionPerformed
-        // TODO add your handling code here:
-        int index = serviceTypeTable.getSelectedRow();
-        if (index != -1) {
-            DefaultTableModel model = (DefaultTableModel) serviceTypeTable.getModel();
-            model.removeRow(index);   
-        }
-    }//GEN-LAST:event_deleteSTbtnActionPerformed
-
-    private void updateSTbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateSTbtnActionPerformed
-        // TODO add your handling code here:
-        int index = serviceTypeTable.getSelectedRow();
-        if (index != -1) {
-            DefaultTableModel model = (DefaultTableModel) serviceTypeTable.getModel();
-            if (updateSTbtn.getText().equals("Sửa")) {         
-                String stCode = model.getValueAt(index, 0).toString();
-                String stName = model.getValueAt(index, 1).toString();
-                String stNote = model.getValueAt(index, 2).toString();
-                serviceTypeCode.setText(stCode);
-                serviceTypeName.setText(stName);
-                serviceTypeNote.setText(stNote);
-                updateSTbtn.setText("Xác nhận");
-                addSTbtn.setEnabled(false);
-                deleteSTbtn.setEnabled(false); 
-            } else {
-                addSTbtn.setEnabled(true);
-                deleteSTbtn.setEnabled(true); 
-                updateSTbtn.setText("Sửa");
-                model.setValueAt(serviceTypeCode.getText(), index, 0);
-                model.setValueAt(serviceTypeName.getText(), index, 1);
-                model.setValueAt(serviceTypeNote.getText(), index, 2);
-            }
-        }
-    }//GEN-LAST:event_updateSTbtnActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
@@ -1829,11 +1696,9 @@ public class ManagerForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addSTbtn;
     private javax.swing.JLabel customerBtn;
     private javax.swing.JPanel customerLayout;
     private static javax.swing.JTable customerTable;
-    private javax.swing.JButton deleteSTbtn;
     private javax.swing.JLabel empBtn;
     private javax.swing.JPanel empLayout;
     private static javax.swing.JTable empTable;
@@ -1860,9 +1725,6 @@ public class ManagerForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1879,7 +1741,6 @@ public class ManagerForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
@@ -1913,10 +1774,10 @@ public class ManagerForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
@@ -1936,13 +1797,8 @@ public class ManagerForm extends javax.swing.JFrame {
     private javax.swing.JPanel serviceLayout;
     private javax.swing.JList<String> serviceList;
     private static javax.swing.JTable serviceTable;
-    private javax.swing.JTextField serviceTypeCode;
     private javax.swing.JPanel serviceTypeLayout;
-    private javax.swing.JTextField serviceTypeName;
-    private javax.swing.JTextArea serviceTypeNote;
-    private javax.swing.JTable serviceTypeTable;
     private javax.swing.JLabel statisticBtn;
     private javax.swing.JPanel statisticLayout;
-    private javax.swing.JButton updateSTbtn;
     // End of variables declaration//GEN-END:variables
 }

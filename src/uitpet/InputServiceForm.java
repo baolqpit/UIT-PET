@@ -19,17 +19,17 @@ public class InputServiceForm extends javax.swing.JFrame {
     /**
      * Creates new form InputServiceForm
      */
-    String type="", code="" , name="" ,note="";
+    String type="CS", code="" , name="" ,note="";
     boolean isUpdate = false;
     int row;
     int price;
     public Object[] getRow() {
-        return new Object[] { type,code,name,price,note };
+        return new Object[] { code,name,price,note };
     }
     
-    public InputServiceForm(String sType, String sCode, String sName,String sPrice, String sNote,int row) {
+    public InputServiceForm( String sCode, String sName,String sPrice, String sNote,int row) {
         initComponents();
-        serviceType.setSelectedItem(sType);
+//        serviceType.setSelectedItem(sType);
         serviceCode.setText(sCode);
         serviceName.setText(sName);
         servicePrice.setText(sPrice);
@@ -59,10 +59,8 @@ public class InputServiceForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         serviceName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        serviceType = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         servicePrice = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -78,13 +76,8 @@ public class InputServiceForm extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel2.setText("Loại dịch vụ");
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel3.setText("Tên dịch vụ");
-
-        serviceType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setText("Giá dịch vụ");
@@ -119,37 +112,31 @@ public class InputServiceForm extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(100, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(65, 65, 65)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(serviceName)
-                            .addComponent(serviceType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)
                             .addComponent(servicePrice, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(serviceCode))))
-                .addContainerGap(101, Short.MAX_VALUE))
+                            .addComponent(serviceCode, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(74, 74, 74))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(serviceType))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(serviceCode, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(serviceCode)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,7 +151,7 @@ public class InputServiceForm extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(74, 74, 74))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -205,7 +192,7 @@ public class InputServiceForm extends javax.swing.JFrame {
     }//GEN-LAST:event_servicePriceActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        type = (String) serviceType.getSelectedItem();
+//        type = (String) serviceType.getSelectedItem();
         code = serviceCode.getText();
         name = serviceName.getText();
         String sPrice = servicePrice.getText();
@@ -239,6 +226,7 @@ public class InputServiceForm extends javax.swing.JFrame {
         if (check){
             if (isUpdate){
                 int updateSer = ServiceDAO.getInstance().update(service);
+                ManagerForm.updateServiceTable();
             }
             else{
                 JOptionPane.showMessageDialog(this, "Ma dich vu da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -249,6 +237,7 @@ public class InputServiceForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Register successfully!");
             if (isUpdate){
                 ManagerForm.replaceRowToServiceTable(getRow(),this.row);
+                ManagerForm.updateServiceTable();
             }
             else {
                 ManagerForm.addRowToServiceTable(getRow());
@@ -296,7 +285,6 @@ public class InputServiceForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -308,6 +296,5 @@ public class InputServiceForm extends javax.swing.JFrame {
     private javax.swing.JTextField serviceName;
     private javax.swing.JTextArea serviceNote;
     private javax.swing.JTextField servicePrice;
-    private javax.swing.JComboBox<String> serviceType;
     // End of variables declaration//GEN-END:variables
 }
