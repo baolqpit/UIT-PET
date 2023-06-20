@@ -19,29 +19,54 @@ public class RegisterFrame extends javax.swing.JFrame {
     /**
      * Creates new form RegisterFrame
      */
-    public RegisterFrame() {
-        initComponents();
-        setVisible(true);
+    String code="", name="", bd="",address="", email="", phone="",date="", role="", user="", pw="", rePw="",accountId="";
+    int salary;
+    boolean isUpdate = false;
+    int row;
+    public Object[] getRow() {
+        return new Object[] { code,name,bd,address,email,phone,date, salary};
     }
 
-    private void reset(){
-        userField.setText("");
-        pwField.setText("");
+    public RegisterFrame() {
+        initComponents();
     }
     
-    private void checkEmpty(){
-        StringBuilder sb = new StringBuilder();
-        if(userField.getText()==null){
-            sb.append("Tai khoan dang bi bo trong!");
+    public RegisterFrame(String sCode, String sName, String sBd,String sAddress, String sEmail,String sPhone,String sDate, String sSalary, String sRole, String sUser, String sPw, String sRePw, int row) {
+        initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        codeField.setText(sCode);
+        nameField.setText(sName);
+        bdField.setText(sBd);
+        addressField.setText(sAddress);
+        mailField.setText(sEmail);
+        phoneField.setText(sPhone);
+        dateField.setText(sDate);
+        salaryField.setText(sSalary);
+        userField.setText(sUser);
+        pwField.setText(sPw);
+        cfpwField.setText(sRePw);
+        if (sRole.equals("staff")) {
+            staff.setSelected(true);
+        } else {
+            manager.setSelected(true);
         }
-        if(pwField.getPassword()==null){
-            sb.append("Mat khau dang bi bo trong!");
-        }
-        if (sb.length() > 0){
-            JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
-            return;
-      }
+             
+        code = codeField.getText();
+        name = nameField.getText();
+        bd = bdField.getText();
+        address = addressField.getText();
+        email = mailField.getText();
+        phone = phoneField.getText();
+        date = dateField.getText();
+        salary = Integer.parseInt(salaryField.getText());
+        role = (staff.isSelected()) ? staff.getText() : manager.getText();
+        user = userField.getText();
+        pw = new String(pwField.getPassword());
+        rePw = new String(cfpwField.getPassword());
+        this.row = this.row;
+        isUpdate = true;
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,158 +76,425 @@ public class RegisterFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        registerBtn = new javax.swing.JButton();
-        resetBtn = new javax.swing.JButton();
-        cancelBtn = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        btng = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
+        codeField = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        nameField = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        bdField = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        addressField = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
         userField = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        manager = new javax.swing.JRadioButton();
+        staff = new javax.swing.JRadioButton();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         pwField = new javax.swing.JPasswordField();
+        jLabel18 = new javax.swing.JLabel();
+        cfpwField = new javax.swing.JPasswordField();
+        jLabel14 = new javax.swing.JLabel();
+        mailField = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        phoneField = new javax.swing.JTextField();
+        dateField = new javax.swing.JFormattedTextField();
+        salaryField = new javax.swing.JTextField();
+        submitEmpBtn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+
+        btng.add(staff);
+        btng.add(manager);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 102, 255));
 
-        jLabel1.setFont(new java.awt.Font("Bauhaus 93", 1, 36)); // NOI18N
-        jLabel1.setText("Register Form");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        registerBtn.setBackground(new java.awt.Color(51, 255, 204));
-        registerBtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        registerBtn.setForeground(new java.awt.Color(0, 0, 0));
-        registerBtn.setText("Đăng kí");
-        registerBtn.addActionListener(new java.awt.event.ActionListener() {
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setText("Mã nhân viên");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setText("Tên nhân viên");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel13.setText("Ngày sinh");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel12.setText("Địa chỉ");
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel20.setText("Vị trí");
+
+        userField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerBtnActionPerformed(evt);
+                userFieldActionPerformed(evt);
             }
         });
 
-        resetBtn.setBackground(new java.awt.Color(51, 255, 204));
-        resetBtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        resetBtn.setForeground(new java.awt.Color(0, 0, 0));
-        resetBtn.setText("Reset");
-        resetBtn.addActionListener(new java.awt.event.ActionListener() {
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel15.setText("Ngày vào làm");
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel19.setText("Lương");
+
+        manager.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        manager.setText("Quản lý");
+
+        staff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        staff.setText("Nhân viên");
+        staff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetBtnActionPerformed(evt);
+                staffActionPerformed(evt);
             }
         });
 
-        cancelBtn.setBackground(new java.awt.Color(51, 255, 204));
-        cancelBtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        cancelBtn.setForeground(new java.awt.Color(0, 0, 0));
-        cancelBtn.setText("Cancel");
-        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelBtnActionPerformed(evt);
-            }
-        });
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel17.setText("Tài khoản");
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel8.setText("Tài khoản");
-
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setText("Mật khẩu");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
+        pwField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pwFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel18.setText("Nhập lại mật khẩu");
+
+        cfpwField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cfpwFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel14.setText("Email");
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel16.setText("SĐT");
+
+        dateField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+
+        submitEmpBtn.setBackground(new java.awt.Color(153, 255, 153));
+        submitEmpBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        submitEmpBtn.setText("Xác nhận");
+        submitEmpBtn.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        submitEmpBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitEmpBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel10)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pwField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(resetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(codeField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel14)
+                                .addContainerGap())
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(bdField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(pwField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel19)
+                                            .addComponent(jLabel16))
+                                        .addGap(74, 74, 74))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel15)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(mailField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(dateField, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(salaryField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
+                                            .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addContainerGap(27, Short.MAX_VALUE))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(106, 106, 106)
+                                .addComponent(staff)
+                                .addGap(59, 59, 59)
+                                .addComponent(manager))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
                                 .addGap(18, 18, 18)
-                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(jLabel1)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                                .addComponent(cfpwField, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(submitEmpBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(209, 209, 209))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel14)
+                            .addComponent(mailField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(codeField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel16))
+                            .addComponent(phoneField))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bdField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel13)
+                                        .addComponent(jLabel15)))
+                                .addGap(22, 22, 22))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel19)
+                                .addComponent(salaryField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(staff)
+                            .addComponent(manager))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pwField))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cfpwField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel18)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(submitEmpBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+        );
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setBackground(new java.awt.Color(102, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("THÊM NHÂN VIÊN");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(271, 271, 271)
+                .addComponent(jLabel1)
+                .addContainerGap(282, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(pwField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(resetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        // TODO add your handling code here:
-        dispose();
+    private void submitEmpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitEmpBtnActionPerformed
+        boolean valid = true;
+        code = codeField.getText();
+        name = nameField.getText();
+        bd = bdField.getText();
+        address = addressField.getText();
+        email = mailField.getText();
+        phone = phoneField.getText();
+        date = dateField.getText();
+        String sSalary = salaryField.getText();
         
-    }//GEN-LAST:event_cancelBtnActionPerformed
-
-    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
-        // TODO add your handling code here:
-        reset();
-    }//GEN-LAST:event_resetBtnActionPerformed
-
-    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        // TODO add your handling code here: 
-//        Tạo mã id tự tăng khi tạo một account mới
+        role = (staff.isSelected()) ? staff.getText() : manager.getText();
+        user = userField.getText();
+        pw = new String(pwField.getPassword());
+        rePw = new String(cfpwField.getPassword());
+        
         StringBuilder sb = new StringBuilder();
-        
-        String user = userField.getText();
-        String pw = new String(pwField.getPassword());
-        
-//        Handle cac truong bi bo trong 
-
-        if(user.equals("")){
-            sb.append("Tai khoan is empty!\n");
+        if (code.equals("")){
+            valid = false;
+//            sb.append("Ma nhan vien is empty!\n");
+        }
+        if (name.equals("")){
+            valid = false;
+//            sb.append("Ten nhan vien is empty!\n");
+        }
+        if (bd.equals("")){
+            valid = false;
+//            sb.append("Ngay sinh nhan vien is empty!\n");
+        }
+        if (address.equals("")){
+            valid = false;
+//            sb.append("Dia chi is empty!\n");
+        }
+        if (email.equals("")){
+            valid = false;
+//            sb.append("Email is empty!\n");
+        }
+        if (phone.equals("")){
+            valid = false;
+//            sb.append("SDT is empty!\n");
+        }
+        if (date.equals("")){
+            valid = false;
+//            sb.append("Ngay vao lam is empty!\n");
+        }
+        if (sSalary.equals("")){
+            valid = false;
+//            sb.append("Luong nhan vien is empty!\n");
+        }
+        if (user.equals("")){
+            valid = false;
+//            sb.append("Tai khoan is empty!\n");
         }
         if (pw.equals("")){
-            sb.append("Mat khau is empty!\n");
+            valid = false;
+//            sb.append("Mat khau is empty!\n");
         }
-        if (sb.length() > 0){
+        if (rePw.equals("")){
+            valid = false;
+//            sb.append("Nhap lai mat khau is empty!\n");
+        }
+        if (!(rePw.equals(pw))){
             SwingUtilities.invokeLater(() -> {
-    JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
-});
-            
+            JOptionPane.showMessageDialog(this, "Mat khau khong trung khop", "Invalidation", JOptionPane.ERROR_MESSAGE);
+        });
+
         }
+//        if (sb.length() > 0){
+//                    SwingUtilities.invokeLater(() -> {
+//            JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
+//        });
+//        }
 //        Tạo id tự động cho Account
+        if (valid) {
+            
+        salary = Integer.parseInt(sSalary);
         String maxIdAccount = AccountDAO.getInstance().getMaxIdFromDatabase();
         if(maxIdAccount == null){
             maxIdAccount = "0";
         }
         int newIdAccount = Integer.parseInt(maxIdAccount) + 1;
         String newStringIdAcc = String.format("%04d", newIdAccount);
-
-//        Kiểm tra xem account này đã có ai sử dụng trước chưa
-        Account account = new Account(newStringIdAcc, user, pw, "Nhan vien");
-        boolean accountCheck = AccountDAO.getInstance().isUserNameExists(account.getAccountName());
-        System.out.println(accountCheck);
-        if (accountCheck==true){
-            JOptionPane.showMessageDialog(this, "Ten tai khoan da co nguoi su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
+//        Tao emp va account
+        System.out.println(newStringIdAcc);
+        Employee employee = new Employee(code, name, bd, address, email, phone, date, role, salary, "None",newStringIdAcc);
+        Account account = new Account(newStringIdAcc, user, pw, role);
+        boolean check = EmployeeDAO.getInstance().isExistedID(code);
+        if (check){
+            if (isUpdate){
+                int updateAcc = AccountDAO.getInstance().update(account);
+                int updateEmp = EmployeeDAO.getInstance().update(employee);
+                
+                ManagerForm.updateEmpTable();
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Ma nhan vien da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
         }
         else {
-            int createAcc = AccountDAO.getInstance().insert(account);
-            JOptionPane.showMessageDialog(this, "Register successfully!");
+            System.out.println(employee);
+            System.out.println(account);
+            boolean checkAccountExisted = AccountDAO.getInstance().isUserNameExists(user);
+            if (checkAccountExisted){
+                JOptionPane.showMessageDialog(this, "Ten tai khoan da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                int createAcc = AccountDAO.getInstance().insert(account);
+                int createEmp = EmployeeDAO.getInstance().insert(employee);
+
+                JOptionPane.showMessageDialog(this, "Register successfully!");
+                if (isUpdate){
+    //                ManagerForm.replaceRowToServiceTable(getRow(),this.row);
+                    ManagerForm.updateEmpTable();
+                }
+                else {
+                    ManagerForm.updateEmpTable();
+                }
+            }
         }
-    }//GEN-LAST:event_registerBtnActionPerformed
+        dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin", "Invalidation", JOptionPane.ERROR_MESSAGE);
+            valid = true;
+        }
+
+    }//GEN-LAST:event_submitEmpBtnActionPerformed
+
+    private void staffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_staffActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_staffActionPerformed
+
+    private void cfpwFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cfpwFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cfpwFieldActionPerformed
+
+    private void pwFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pwFieldActionPerformed
+
+    private void userFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,13 +502,35 @@ public class RegisterFrame extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelBtn;
+    private javax.swing.JTextField addressField;
+    private javax.swing.JTextField bdField;
+    private javax.swing.ButtonGroup btng;
+    private javax.swing.JPasswordField cfpwField;
+    private javax.swing.JTextField codeField;
+    private javax.swing.JFormattedTextField dateField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField mailField;
+    private javax.swing.JRadioButton manager;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JTextField phoneField;
     private javax.swing.JPasswordField pwField;
-    private javax.swing.JButton registerBtn;
-    private javax.swing.JButton resetBtn;
+    private javax.swing.JTextField salaryField;
+    private javax.swing.JRadioButton staff;
+    private javax.swing.JButton submitEmpBtn;
     private javax.swing.JTextField userField;
     // End of variables declaration//GEN-END:variables
 }

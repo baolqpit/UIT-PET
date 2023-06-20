@@ -4,6 +4,11 @@
  */
 package uitpet;
 
+import ClassModel.Service;
+import DAOmodel.ServiceDAO;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,31 +20,35 @@ public class InputServiceForm extends javax.swing.JFrame {
     /**
      * Creates new form InputServiceForm
      */
-    String type="", code="" , name="" ,note="";
+     String  code="" , name="" ,note="";
     boolean isUpdate = false;
     int row;
-    long price;
+    int price;
     public Object[] getRow() {
-        return new Object[] { type,code,name,note };
+        return new Object[] { code,name,note, price };
     }
     
-    public InputServiceForm(String sType, String sCode, String sName, String sNote,int row) {
+    public InputServiceForm( String sCode, String sName, String sNote,String sPrice, int row) {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
-        serviceType.setSelectedItem(sType);
         serviceCode.setText(sCode);
         serviceName.setText(sName);
+        servicePrice.setText(sPrice);
         serviceNote.setText(sNote);
+        
         code = serviceCode.getText();
         name = serviceName.getText();
-//        price = Long.parseLong(servicePrice.getText());
         note = serviceNote.getText();
+        price = Integer.parseInt(servicePrice.getText());
         this.row = row;
+        title.setText("Cập nhật dịch vụ");
         isUpdate = true;
     }
     
     
     
     public InputServiceForm() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 
@@ -53,10 +62,8 @@ public class InputServiceForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         serviceName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        serviceType = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         servicePrice = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -66,19 +73,14 @@ public class InputServiceForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         serviceCode = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel2.setText("Loại dịch vụ");
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel3.setText("Tên dịch vụ");
-
-        serviceType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setText("Giá dịch vụ");
@@ -113,37 +115,32 @@ public class InputServiceForm extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(92, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(65, 65, 65)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(serviceName)
-                            .addComponent(serviceType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                            .addComponent(servicePrice, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(serviceCode))))
-                .addContainerGap(101, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(serviceName)
+                    .addComponent(jScrollPane1)
+                    .addComponent(servicePrice, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(serviceCode, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(82, 82, 82))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(serviceType))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(serviceCode, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(serviceCode)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,9 +153,9 @@ public class InputServiceForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(44, 44, 44)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(86, 86, 86))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -166,11 +163,11 @@ public class InputServiceForm extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(51, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Thêm dịch vụ");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        title.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setText("THÊM DỊCH VỤ");
+        title.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -178,14 +175,14 @@ public class InputServiceForm extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(158, 158, 158)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(184, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -199,18 +196,74 @@ public class InputServiceForm extends javax.swing.JFrame {
     }//GEN-LAST:event_servicePriceActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        type = (String) serviceType.getSelectedItem();
+        boolean valid = true;
         code = serviceCode.getText();
         name = serviceName.getText();
-        price = Long.parseLong(servicePrice.getText());
+        String sPrice = servicePrice.getText();
         note = serviceNote.getText();
-        if (isUpdate) {
-            ManagerForm.replaceRowToServiceTable(getRow(),this.row);
-        } else {
-            ManagerForm.addRowToServiceTable(getRow());
+        if (note.equals("")){
+            note = "NONE";
+        }
+        else {
+            note = serviceNote.getText();
         }
         
+        StringBuilder sb = new StringBuilder();
+        if (code.equals("")){
+            valid = false;
+//            sb.append("Ma dich vu is empty!\n");
+        }
+        if (name.equals("")){
+//            sb.append("Ten dich vu is empty!\n");
+            valid = false;
+        }
+        if (sPrice.equals("")){
+//            sb.append("Gia dich vu is empty!\n");
+            valid = false;
+        }
+//        if (sb.length() > 0){
+//                    SwingUtilities.invokeLater(() -> {
+//            JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
+//        });
+//        }
+        if (valid){
+            price = Integer.parseInt(sPrice);
+            Service service = new Service(code, name, note, price);
+            boolean check = ServiceDAO.getInstance().isExistedID(code);
+//            price = Integer.parseInt(sPrice);
+        if (check){
+            if (isUpdate){
+                int updateSer = ServiceDAO.getInstance().update(service);
+                ManagerForm.updateServiceTable();
+                ManagerForm.updateProductTable();
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Ma dich vu da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else {
+            int createSer = ServiceDAO.getInstance().insert(service);
+            JOptionPane.showMessageDialog(this, "Register successfully!");
+            if (isUpdate){
+//                ManagerForm.replaceRowToServiceTable(getRow(),this.row);
+                ManagerForm.updateServiceTable();
+                ManagerForm.updateProductTable();
+            }
+            else {
+                ManagerForm.updateServiceTable();
+                ManagerForm.updateProductTable();
+            }
+        }
+
+        } 
+        else {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin", "Invalidation", JOptionPane.ERROR_MESSAGE);
+            valid = true;
+        }
+        ManagerForm.updateStatistic();
         dispose();
+       
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -251,8 +304,6 @@ public class InputServiceForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -264,6 +315,6 @@ public class InputServiceForm extends javax.swing.JFrame {
     private javax.swing.JTextField serviceName;
     private javax.swing.JTextArea serviceNote;
     private javax.swing.JTextField servicePrice;
-    private javax.swing.JComboBox<String> serviceType;
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

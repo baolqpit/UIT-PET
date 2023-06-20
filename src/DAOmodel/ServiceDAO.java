@@ -17,23 +17,110 @@ public class ServiceDAO implements DAOInterface<Service>{
         return new ServiceDAO();
     }
     
+    public static int getCount(String code){
+        int count = 0;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT SUM(QUANTITY) FROM SERVICE_DETAIL WHERE SERVICE_CODE = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, code);
+            
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            count = rs.getInt(1);
+            JDBCUtil.closeConnection(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    
+    public static ArrayList<Service> findServiceByIdOrName(String str){
+        ArrayList<Service> serList = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            
+            String sql = "SELECT * FROM SERVICE WHERE SERVICE_CODE LIKE ? OR SERVICE_NAME LIKE ?";
+            String searchValue = "%" +str+ "%";
+            
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, searchValue);
+            pst.setString(2, searchValue);
+           
+            
+            ResultSet rs = pst.executeQuery();
+            System.out.println("You have done: " + sql);
+            
+            while(rs.next()){
+                String code = rs.getString("SERVICE_CODE");
+                String serName = rs.getString("SERVICE_NAME");
+                int price = rs.getInt("PRICE");
+                String notes = rs.getString("NOTES");
+                
+                Service service = new Service(code, serName, notes, price);
+                serList.add(service);
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Cannot select by Id! Please try again!");
+        }
+       return serList;
+    }
+    public static int getRevenue(String code){
+        int count = 0;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT SUM(QUANTITY*PRICE) FROM SERVICE_DETAIL WHERE SERVICE_CODE = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, code);
+            
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            count = rs.getInt(1);
+            JDBCUtil.closeConnection(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    
+    public static boolean isExistedID(String code){
+        boolean check = false;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "SELECT COUNT(*) FROM SERVICE WHERE SERVICE_CODE = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, code);
+            
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+            if (count > 0){
+                check = true;
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
     @Override
     public int insert(Service t) {
         int result = 0;
         try {
             Connection c = JDBCUtil.getConnection();
             
-            String sql = "INSERT INTO SERVICE(SERVICE_CODE, SERVICE_NAME, TYPE, PRICE, NOTES)"
-                    + " VALUES(?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO SERVICE(SERVICE_CODE, SERVICE_NAME, PRICE, NOTES)"
+                    + " VALUES(?, ?, ?, ?)";
             
             PreparedStatement pst = c.prepareStatement(sql);
             System.out.println("You have done: " + sql);
             
             pst.setString(1, t.getServiceCode());
             pst.setString(2, t.getServiceName());
-            pst.setString(3, t.getServiceType());
-            pst.setInt(4, t.getServicePrice());
-            pst.setString(5, t.getServiceNotes());
+            pst.setInt(3, t.getServicePrice());
+            pst.setString(4, t.getServiceNotes());
             
             result = pst.executeUpdate();
             System.out.println("Have " + result + " been changed!");
@@ -52,18 +139,17 @@ public class ServiceDAO implements DAOInterface<Service>{
             Connection c = JDBCUtil.getConnection();
             
             String sql = "UPDATE SERVICE " 
-                    + "SET SERVICE_NAME = ?, " + "TYPE= ?, "
-                    + "PRICE = ?, " + "NOTE= ?, " + "WHERE SERVICE_CODE = ?";
+                    + "SET SERVICE_NAME = ?, "
+                    + "PRICE = ?, " + "NOTES= ? " + "WHERE SERVICE_CODE = ?";
                     
             PreparedStatement pst = c.prepareStatement(sql);
             System.out.println("You have done: " + sql);
             
             
             pst.setString(1, t.getServiceName());
-            pst.setString(2, t.getServiceType());
-            pst.setInt(3, t.getServicePrice());
-            pst.setString(4, t.getServiceNotes());
-            pst.setString(5, t.getServiceCode());
+            pst.setInt(2, t.getServicePrice());
+            pst.setString(3, t.getServiceNotes());
+            pst.setString(4, t.getServiceCode());
             
             
             result = pst.executeUpdate();
@@ -113,10 +199,9 @@ public class ServiceDAO implements DAOInterface<Service>{
             while(rs.next()){
                 String code = rs.getString("SERVICE_CODE");
                 String name = rs.getString("SERVICE_NAME");
-                String type = rs.getString("TYPE");
                 int price = rs.getInt("PRICE");
-                String role = rs.getString("NOTES");
-                Service service = new Service(code, name, type, role, price);
+                String notes = rs.getString("NOTES");
+                Service service = new Service(code, name, notes, price);
                 serviceList.add(service);
             }
             System.out.println("You have done: " + sql);
@@ -146,11 +231,10 @@ public class ServiceDAO implements DAOInterface<Service>{
             while(rs.next()){
                 String code = rs.getString("SERVICE_CODE");
                 String name = rs.getString("SERVICE_NAME");
-                String type = rs.getString("TYPE");
                 int price = rs.getInt("PRICE");
-                String role = rs.getString("NOTES");
+                String notes = rs.getString("NOTES");
                 
-                service = new Service(code, name, type, role, price);
+                service = new Service(code, name, notes, price);
             }
             JDBCUtil.closeConnection(con);
         } catch (Exception e) {

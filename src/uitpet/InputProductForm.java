@@ -6,6 +6,8 @@ package uitpet;
 
 import ClassModel.Product;
 import DAOmodel.ProductDAO;
+import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +31,7 @@ public class InputProductForm extends javax.swing.JFrame {
     }
     
     public InputProductForm(String pCode, String pName,int pQuantity, long inPrice, long outPrice, String pNote, String date,int row) {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         codeField.setText(pCode);
         nameField.setText(pName);
@@ -38,12 +41,14 @@ public class InputProductForm extends javax.swing.JFrame {
         noteField.setText(pNote);
         dateField.setText(date);
         this.row = row;
+        title.setText("Cập nhật sản phẩm");
         isUpdate = true;
     }
     
     
     
     public InputProductForm() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
     }
 
@@ -74,7 +79,7 @@ public class InputProductForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         outPriceField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,13 +145,12 @@ public class InputProductForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(inputProductSubmitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(inPriceField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(codeField, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                                .addComponent(quantityField))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inPriceField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(codeField, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                            .addComponent(quantityField)
+                            .addComponent(jScrollPane1))
+                        .addGap(49, 49, 49)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -188,7 +192,7 @@ public class InputProductForm extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)))
                     .addComponent(outPriceField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(inputProductSubmitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(79, 79, 79))
         );
@@ -198,11 +202,11 @@ public class InputProductForm extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(51, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Thêm sản phẩm");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        title.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setText("THÊM SẢN PHẨM");
+        title.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -210,14 +214,14 @@ public class InputProductForm extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(339, 339, 339)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(349, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -231,72 +235,107 @@ public class InputProductForm extends javax.swing.JFrame {
     }//GEN-LAST:event_inPriceFieldActionPerformed
 
     private void inputProductSubmitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputProductSubmitBtnActionPerformed
-
-        boolean valid = true;
+         boolean valid = true;
         StringBuilder sb = new StringBuilder();
         code = codeField.getText();
         name = nameField.getText();
         String stringPrice = outPriceField.getText();
         note = noteField.getText();
+        if (note.equals("")){
+            note = "NONE";
+        }
+        else {
+            note = noteField.getText();
+        }
         String stringImportPrice = inPriceField.getText();
         quantity = (int) quantityField.getValue();
         date = dateField.getText();
         note = noteField.getText();
 //        Kiểm tra input
         if (code.equals("")){
-            sb.append("Ma san pham is empty!\n");
+//            sb.append("Ma san pham is empty!\n");
             valid = false;
         }
         if (name.equals("")){
-            sb.append("Ten san pham is empty!\n");
+//            sb.append("Ten san pham is empty!\n");
             valid = false;
         }
         if (stringPrice.equals("")){
-            sb.append("Gia ban is empty!\n");
+//            sb.append("Gia ban is empty!\n");
             valid = false;
         }
         if (stringImportPrice.equals("")){
-            sb.append("Gia nhap is empty!\n");
+//            sb.append("Gia nhap is empty!\n");
             valid = false;
         }
         if (quantity <= 0){
             valid = false;
-            JOptionPane.showMessageDialog(this, "So luong must larger than 0!", "Error!", JOptionPane.ERROR_MESSAGE);
+//            SwingUtilities.invokeLater(() -> {
+//            JOptionPane.showMessageDialog(this, "So luong must larger than 0!", "Invalidation", JOptionPane.ERROR_MESSAGE);
+//        });
+
         }
         if (date.equals("")){
             valid = false;
-            sb.append("Ngay nhap is empty!\n");
+//            sb.append("Ngay nhap is empty!\n");
         }       
-        if (sb.length() > 0){
-                    SwingUtilities.invokeLater(() -> {
-            JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
-        });
-        }
+//        if (sb.length() > 0){
+//                    SwingUtilities.invokeLater(() -> {
+//            JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
+//        });
+//        }
 //        Ep kieu
-        inPrice = Integer.parseInt(stringPrice);
-        outPrice = Integer.parseInt(stringImportPrice);
+        
         if (valid == true){
-            Product product = new Product(code, name, inPrice, note, outPrice, quantity, date);
+            inPrice = Integer.parseInt(stringImportPrice);
+            outPrice = Integer.parseInt(stringPrice);
+            Product product = new Product(code, name, outPrice, note, inPrice, quantity, date);
             boolean productCheck = ProductDAO.getInstance().isExistedID(code);
             System.out.println(productCheck);
             if (productCheck == true){
-                JOptionPane.showMessageDialog(this, "Ma san pham da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
+                if (isUpdate){
+                    int updatePro = ProductDAO.getInstance().update(product);
+                    ManagerForm.productArrayOrigin = ProductDAO.getInstance().SelectAll();
+                       ManagerForm.productArray = ProductDAO.SelectAvble();
+                       ManagerForm.productArrayDel = new ArrayList<>();
+                    ManagerForm.updateProductListTable();
+                    ManagerForm.updateProductTable();
+
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Ma san pham da duoc su dung!", "Error!", JOptionPane.ERROR_MESSAGE);
+
+                }
             }
             else {
                 int createProduct = ProductDAO.getInstance().insert(product);
                 JOptionPane.showMessageDialog(this, "Register successfully!");
                 if (isUpdate) {
-                    ManagerForm.replaceRowToProductListTable(getRow(),this.row);
+//                    ManagerForm.replaceRowToProductListTable(getRow(),this.row);
+                       ManagerForm.updateProductListTable();
+                       ManagerForm.productArrayOrigin = ProductDAO.getInstance().SelectAll();
+                       ManagerForm.productArray = ProductDAO.SelectAvble();
+                       ManagerForm.productArrayDel = new ArrayList<>();
+//                       ManagerForm.resetTable();
+                        ManagerForm.updateProductTable();
                 }
                 else {
-                    ManagerForm.addRowToProductListTable(getRow());
+                    ManagerForm.productArrayOrigin = ProductDAO.getInstance().SelectAll();
+                       ManagerForm.productArray = ProductDAO.SelectAvble();
+                       ManagerForm.productArrayDel = new ArrayList<>();
+                    ManagerForm.updateProductListTable();
+//                       ManagerForm.resetTable();
+                        ManagerForm.updateProductTable();
                 }
             }
+            dispose();
         }
         else {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin", "Invalidation", JOptionPane.ERROR_MESSAGE);
             valid = true;
         }
-        dispose();
+        
+     
     }//GEN-LAST:event_inputProductSubmitBtnActionPerformed
 
 
@@ -343,7 +382,6 @@ public class InputProductForm extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField dateField;
     private javax.swing.JTextField inPriceField;
     private javax.swing.JButton inputProductSubmitBtn;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -358,5 +396,6 @@ public class InputProductForm extends javax.swing.JFrame {
     private javax.swing.JTextArea noteField;
     private javax.swing.JTextField outPriceField;
     private javax.swing.JSpinner quantityField;
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
